@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';  
-import { HttpClientModule } from '@angular/common/http';
-
+import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http'; // Importar withFetch
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './auth.interceptor';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -29,9 +30,11 @@ import { RegisterUserComponent } from './register-user/register-user.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,  
-    HttpClientModule 
+    HttpClientModule
   ],
   providers: [
+    provideHttpClient(withFetch()), // Habilitar fetch
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     provideClientHydration()
   ],
   bootstrap: [AppComponent]
