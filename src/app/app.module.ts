@@ -11,6 +11,8 @@ import { AddPrendasComponent } from './add-prendas/add-prendas.component';
 import { AddProveedoresComponent } from './add-proveedores/add-proveedores.component';
 import { RealizarPedidosComponent } from './realizar-pedidos/realizar-pedidos.component';
 import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterUserComponent } from './register-user/register-user.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { HomeComponent } from './home/home.component';
     AddPrendasComponent,
     AddProveedoresComponent,
     RealizarPedidosComponent,
-    HomeComponent
+    HomeComponent,
+    LoginComponent,
+    RegisterUserComponent
   ],
   imports: [
     BrowserModule,
