@@ -10,43 +10,38 @@ export class AddEmpleadosComponent implements OnInit {
   title = 'Gestione su almacén';
 
   empleado = {
+    id_empleado: null,
     nombres: '',
     apellidos: '',
     direccion: '',
     telefono: '',
-    salario: 0
+    salario: 0,
+    fechaContratacion: new Date().toISOString().slice(0, 10),
+    estado: 'En nomina'
   };
 
   empleados: any[] = [];
-  isModalOpen = false;
-  modalAction = '';
-  updateId: number = 0;
-  deleteId: number = 0;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
     this.getEmpleados();
   }
 
   onSubmit() {
-    this.http.post('http://localhost:3000/api/empleados', this.empleado).subscribe(response => {
-      alert('Empleado creado con éxito');
-      this.getEmpleados();
-    });
-  }
-
-  openModal(action: string) {
-    this.modalAction = action;
-    this.isModalOpen = true;
-    if (action === 'get') {
-      this.getEmpleados();
+    if (this.empleado.id_empleado) {
+      this.updateEmpleado();
+    } else {
+      this.createEmpleado();
     }
   }
 
-  closeModal() {
-    this.isModalOpen = false;
-    this.modalAction = '';
+  createEmpleado() {
+    this.http.post('http://localhost:3000/api/empleados', this.empleado).subscribe(response => {
+      alert('Empleado creado con éxito');
+      this.getEmpleados();
+      this.resetEmpleadoForm();
+    });
   }
 
   getEmpleados() {
@@ -55,19 +50,35 @@ export class AddEmpleadosComponent implements OnInit {
     });
   }
 
+  editEmpleado(emp: any) {
+    this.empleado = { ...emp };
+  }
+
   updateEmpleado() {
-    this.http.put(`http://localhost:3000/api/empleados/${this.updateId}`, this.empleado).subscribe(response => {
+    this.http.put(`http://localhost:3000/api/empleados/${this.empleado.id_empleado}`, this.empleado).subscribe(response => {
       alert('Empleado actualizado con éxito');
       this.getEmpleados();
-      this.closeModal();
+      this.resetEmpleadoForm();
     });
   }
 
-  deleteEmpleado() {
-    this.http.delete(`http://localhost:3000/api/empleados/${this.deleteId}`).subscribe(response => {
+  deleteEmpleado(id: number) {
+    this.http.delete(`http://localhost:3000/api/empleados/${id}`).subscribe(response => {
       alert('Empleado eliminado con éxito');
       this.getEmpleados();
-      this.closeModal();
     });
+  }
+
+  resetEmpleadoForm() {
+    this.empleado = {
+      id_empleado: null,
+      nombres: '',
+      apellidos: '',
+      direccion: '',
+      telefono: '',
+      salario: 0,
+      fechaContratacion: new Date().toISOString().slice(0, 10),
+      estado: 'En nomina'
+    };
   }
 }
