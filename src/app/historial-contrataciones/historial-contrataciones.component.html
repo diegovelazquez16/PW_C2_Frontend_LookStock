@@ -1,0 +1,58 @@
+<div class="container">
+    <div class="header">
+      <img src="assets/Imgs/Logo AR.jpeg" alt="Logo" class="logo">
+      <h1>{{ title }}</h1>
+      <img src="assets/Imgs/Logo AR.jpeg" alt="Logo" class="logo">
+    </div>
+  
+    <div class="form-container">
+      <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="id_empleado">ID Empleado:</label>
+          <input type="number" id="id_empleado" [(ngModel)]="historial.id_empleado" name="id_empleado" required>
+        </div>
+        <div class="form-group">
+          <label for="fechaCambio">Fecha de Cambio:</label>
+          <input type="date" id="fechaCambio" [(ngModel)]="historial.fechaCambio" name="fechaCambio" required>
+        </div>
+        <div class="form-group">
+          <label for="salarioAnterior">Salario Anterior:</label>
+          <input type="number" id="salarioAnterior" [(ngModel)]="historial.salarioAnterior" name="salarioAnterior">
+        </div>
+        <div class="form-group">
+          <label for="nuevoSalario">Nuevo Salario:</label>
+          <input type="number" id="nuevoSalario" [(ngModel)]="historial.nuevoSalario" name="nuevoSalario" required>
+        </div>
+        <button type="submit">{{ historial.id_historial ? 'Actualizar' : 'Crear' }}</button>
+      </form>
+    </div>
+  
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>ID Historial</th>
+            <th>ID Empleado</th>
+            <th>Fecha de Cambio</th>
+            <th>Salario Anterior</th>
+            <th>Nuevo Salario</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of historiales">
+            <td>{{ item.id_historial }}</td>
+            <td>{{ item.id_empleado }}</td>
+            <td>{{ item.fechaCambio | date }}</td>
+            <td>{{ item.salarioAnterior }}</td>
+            <td>{{ item.nuevoSalario }}</td>
+            <td>
+              <button (click)="editHistorial(item)">Editar</button>
+              <button (click)="deleteHistorial(item.id_historial)">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

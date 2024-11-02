@@ -1,78 +1,61 @@
 <div class="container">
-    <div class="header">
-        <img src="assets/Imgs/Logo AR.jpeg" alt="Logo" class="logo">
-        <h1>{{ title }}</h1>
-        <img src="assets/Imgs/Logo AR.jpeg" alt="Logo" class="logo">
-      </div>
-    <div class="form-container">
-      <h2>Añade un proveedor</h2>
-  
-      <form (submit)="onSubmit()">
-        <div class="form-group">
-          <label for="nombre">Nombre</label>
-          <input type="text" id="nombre" [(ngModel)]="proveedor.nombres" name="nombre" required>
-        </div>
-  
-        <div class="form-group">
-          <label for="direccion">Dirección</label>
-          <input type="text" id="direccion" [(ngModel)]="proveedor.direccion" name="direccion">
-        </div>
-  
-        <div class="form-group">
-          <label for="telefono">Teléfono</label>
-          <input type="text" id="telefono" [(ngModel)]="proveedor.telefono" name="telefono">
-        </div>
-  
-        <div class="form-group">
-          <label for="email">Correo electrónico</label>
-          <input type="email" id="email" [(ngModel)]="proveedor.email" name="email">
-        </div>
-  
-        <button type="submit" class="btnbtn-primary">Guardar</button>
-      </form>
-    </div>
-  
-    <div class="crud-buttons">
-      <button (click)="openModal('get')">Consultar proveedores</button>
-      <button (click)="openModal('update')">Actualizar proveedor</button>
-      <button (click)="openModal('delete')">Eliminar proveedor</button>
-    </div>
-  
-    <!-- Modal -->
-    <div *ngIf="isModalOpen" class="modal">
-      <div class="modal-content">
-        <span class="close" (click)="closeModal()">&times;</span>
-  
-        <!-- Consultar proveedores -->
-        <ng-container *ngIf="modalAction === 'get'">
-            <h3>Lista de proveedores</h3>
-            <ul>
-              <li *ngFor="let prov of proveedores">
-                <strong>ID:</strong> {{ prov.id_proveedor }}<br>
-                <strong>Nombre:</strong> {{ prov.nombres}} <br>
-                <strong>Dirección:</strong> {{ prov.direccion }} <br>
-                <strong>Teléfono:</strong> {{ prov.telefono }} <br>
-                <strong>Email:</strong> {{ prov.email }} <br>
-              </li>
-            </ul>
-          </ng-container>
-  
-        <!-- Actualizar proveedor -->
-        <ng-container *ngIf="modalAction === 'update'">
-          <h3>Actualizar proveedor</h3>
-          <label for="updateId">ID de proveedor</label>
-          <input type="number" [(ngModel)]="updateId" id="updateId" placeholder="ID del proveedor">
-          <button (click)="updateProveedor()">Actualizar</button>
-        </ng-container>
-  
-        <!-- Eliminar proveedor -->
-        <ng-container *ngIf="modalAction === 'delete'">
-          <h3>Eliminar proveedor</h3>
-          <label for="deleteId">ID de proveedor</label>
-          <input type="number" [(ngModel)]="deleteId" id="deleteId" placeholder="ID del proveedor">
-          <button (click)="deleteProveedor()">Eliminar</button>
-        </ng-container>
-      </div>
-    </div>
+  <div class="header">
+      <img src="assets/Imgs/Logo AR.jpeg" alt="Logo" class="logo">
+      <h1>{{ title }}</h1>
+      <img src="assets/Imgs/Logo AR.jpeg" alt="Logo" class="logo">
   </div>
-  
+  <div class="form-container">
+      <h2>Añade un proveedor</h2>
+
+      <form (submit)="onSubmit()">
+          <div class="form-group">
+              <label for="nombre">Nombre</label>
+              <input type="text" id="nombre" [(ngModel)]="proveedor.nombres" name="nombre" required>
+          </div>
+
+          <div class="form-group">
+              <label for="direccion">Dirección</label>
+              <input type="text" id="direccion" [(ngModel)]="proveedor.direccion" name="direccion">
+          </div>
+
+          <div class="form-group">
+              <label for="telefono">Teléfono</label>
+              <input type="text" id="telefono" [(ngModel)]="proveedor.telefono" name="telefono">
+          </div>
+
+          <div class="form-group">
+              <label for="email">Correo electrónico</label>
+              <input type="email" id="email" [(ngModel)]="proveedor.email" name="email">
+          </div>
+
+          <button type="submit" class="btn btn-primary">Guardar</button>
+      </form>
+  </div>
+
+  <h2>Lista de Proveedores</h2>
+  <table class="table">
+      <thead>
+          <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Dirección</th>
+              <th>Teléfono</th>
+              <th>Email</th>
+              <th>Acciones</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let prov of proveedores">
+              <td>{{ prov.id_proveedor }}</td>
+              <td>{{ prov.nombres }}</td>
+              <td>{{ prov.direccion }}</td>
+              <td>{{ prov.telefono }}</td>
+              <td>{{ prov.email }}</td>
+              <td>
+                  <button (click)="editProveedor(prov.id_proveedor)">Editar</button>
+                  <button (click)="deleteProveedor(prov.id_proveedor)">Eliminar</button>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+</div>

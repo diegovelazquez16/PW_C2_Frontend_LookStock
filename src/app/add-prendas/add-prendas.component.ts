@@ -1,92 +1,82 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-prendas',
   templateUrl: './add-prendas.component.html',
   styleUrls: ['./add-prendas.component.css']
 })
-export class AddPrendasComponent {
+export class AddPrendasComponent implements OnInit {
   title = 'Gestione su almacén';
+
   prenda = {
+    id_prenda: null,
     nombre: '',
     talla: '',
-    precio: null,
+    precio: 0,
     color: '',
     descripcion: '',
-    cantidad: null
+    cantidad: 0
   };
 
-  prendas: any[] = []; 
-  isModalOpen: boolean = false;
-  modalAction: string = '';
-  updateId: number = 0;
-  deleteId: number = 0;
+  prendas: any[] = [];
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient) {}
 
-  onSubmit() {
-    this.http.post('http://localhost:3000/api/prendas', this.prenda)
-      .subscribe({
-        next: (response) => {
-          console.log('Prenda añadida con éxito', response);
-          this.router.navigate(['/prendas']);
-        },
-        error: (error) => {
-          console.error('Error al añadir la prenda', error);
-        }
-      });
+  ngOnInit(): void {
+    this.getPrendas();
   }
 
-  openModal(action: string) {
-    this.modalAction = action;
-    this.isModalOpen = true;
-
-    if (action === 'get') {
-      this.getPrendas();
+  onSubmit() {
+    if (this.prenda.id_prenda) {
+      this.updatePrenda();
+    } else {
+      this.createPrenda();
     }
   }
 
-  closeModal() {
-    this.isModalOpen = false;
+  createPrenda() {
+    this.http.post('http://localhost:3000/api/prendas', this.prenda).subscribe(response => {
+      alert('Prenda creada con éxito');
+      this.getPrendas();
+      this.resetPrendaForm();
+    });
   }
 
   getPrendas() {
-    this.http.get('http://localhost:3000/api/prendas')
-      .subscribe({
-        next: (data: any) => {
-          this.prendas = data;
-        },
-        error: (error) => {
-          console.error('Error al obtener las prendas', error);
-        }
-      });
+    this.http.get<any[]>('http://localhost:3000/api/prendas').subscribe(response => {
+      this.prendas = response;
+    });
+  }
+
+  editPrenda(p: any) {
+    this.prenda = { ...p };
   }
 
   updatePrenda() {
-    this.http.put(`http://localhost:3000/api/prendas/${this.updateId}`, this.prenda)
-      .subscribe({
-        next: (response) => {
-          console.log('Prenda actualizada con éxito', response);
-          this.closeModal();
-        },
-        error: (error) => {
-          console.error('Error al actualizar la prenda', error);
-        }
-      });
+    this.http.put(`http://localhost:3000/api/prendas/${this.prenda.id_prenda}`, this.prenda).subscribe(response => {
+      alert('Prenda actualizada con éxito');
+      this.getPrendas();
+      this.resetPrendaForm();
+    });
   }
 
-  deletePrenda() {
-    this.http.delete(`http://localhost:3000/api/prendas/${this.deleteId}`)
-      .subscribe({
-        next: (response) => {
-          console.log('Prenda eliminada con éxito', response);
-          this.closeModal();
-        },
-        error: (error) => {
-          console.error('Error al eliminar la prenda', error);
-        }
-      });
+  deletePrenda(id: number) {
+    this.http.delete(`http://localhost:3000/api/prendas/${id}`).subscribe(response => {
+      alert('Prenda eliminada con éxito');
+      this.getPrendas();
+    });
+  }
+
+  resetPrendaForm() {
+    this.prenda = {
+      id_prenda: null,
+      nombre: '',
+      talla: '',
+      precio: 0,
+      color: '',
+      descripcion: '',
+      cantidad: 0
+    };
   }
 }
