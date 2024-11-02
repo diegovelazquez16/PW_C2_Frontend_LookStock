@@ -16,6 +16,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterUserComponent } from './register-user/register-user.component';
 import { HistorialContratacionesComponent } from './historial-contrataciones/historial-contrataciones.component';
 import { VentasComponent } from './ventas/ventas.component';
+import { FacturasComponent } from './facturas/facturas.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { VentasComponent } from './ventas/ventas.component';
     LoginComponent,
     RegisterUserComponent,
     HistorialContratacionesComponent,
-    VentasComponent
+    VentasComponent,
+    FacturasComponent
   ],
   imports: [
     BrowserModule,

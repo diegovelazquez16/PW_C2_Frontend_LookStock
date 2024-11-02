@@ -1,0 +1,66 @@
+<div class="container">
+    <div class="header">
+      <h2>{{ title }}</h2>
+    </div>
+  
+    <div class="form-container">
+      <h3>{{ factura.id_factura ? 'Editar Factura' : 'Agregar Factura' }}</h3>
+      <form (submit)="onSubmit()">
+        <div class="form-group">
+          <label for="id_venta">ID Venta:</label>
+          <input type="number" [(ngModel)]="factura.id_venta" name="id_venta" required />
+        </div>
+  
+        <div class="form-group">
+          <label for="cliente">Cliente:</label>
+          <input type="text" [(ngModel)]="factura.cliente" name="cliente" required />
+        </div>
+  
+        <div class="form-group">
+          <label for="total">Total:</label>
+          <input type="number" [(ngModel)]="factura.total" name="total" required />
+        </div>
+  
+        <div class="form-group">
+          <label for="estado">Estado:</label>
+          <select [(ngModel)]="factura.estado" name="estado">
+            <option value="Pendiente">Pendiente</option>
+            <option value="Pagado">Pagado</option>
+            <option value="Cancelado">Cancelado</option>
+          </select>
+        </div>
+  
+        <button type="submit">{{ factura.id_factura ? 'Actualizar' : 'Agregar' }}</button>
+        <button type="button" (click)="resetFacturaForm()">Cancelar</button>
+      </form>
+    </div>
+  
+    <div class="table-container">
+      <h3>Lista de Facturas</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>ID Factura</th>
+            <th>ID Venta</th>
+            <th>Cliente</th>
+            <th>Total</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let fac of facturas">
+            <td>{{ fac.id_factura }}</td>
+            <td>{{ fac.id_venta }}</td>
+            <td>{{ fac.cliente }}</td>
+            <td>{{ fac.total | currency }}</td>
+            <td>{{ fac.estado }}</td>
+            <td>
+              <button (click)="editFactura(fac)">Editar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

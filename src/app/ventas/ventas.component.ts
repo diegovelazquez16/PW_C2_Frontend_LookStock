@@ -56,12 +56,7 @@ export class VentasComponent implements OnInit {
     this.venta = { ...v };
   }
 
-  deleteVenta(id: number) {
-    this.http.delete(`http://localhost:3000/api/ventas/${id}`).subscribe(response => {
-      alert('Venta eliminada con éxito');
-      this.getVentas();
-    });
-  }
+
 
   resetVentaForm() {
     this.venta = {
