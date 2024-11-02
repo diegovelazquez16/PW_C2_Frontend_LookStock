@@ -8,7 +8,7 @@ import { AddPrendasComponent } from './add-prendas/add-prendas.component';
 import { AddProveedoresComponent } from './add-proveedores/add-proveedores.component';
 import { RealizarPedidosComponent } from './realizar-pedidos/realizar-pedidos.component';
 import { HistorialContratacionesComponent } from './historial-contrataciones/historial-contrataciones.component';
-
+import { VentasComponent } from './ventas/ventas.component';
 const routes: Routes = [
   { path: '', component: LoginComponent }, 
   { path: 'home', component: HomeComponent },
@@ -18,6 +18,7 @@ const routes: Routes = [
   { path: 'add-proveedores', component: AddProveedoresComponent },
   { path: 'realizar-pedidos', component: RealizarPedidosComponent },
   { path: 'historial-contrataciones', component: HistorialContratacionesComponent },
+  { path: 'ventas', component: VentasComponent}
 
 ];
 

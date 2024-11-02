@@ -15,6 +15,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterUserComponent } from './register-user/register-user.component';
 import { HistorialContratacionesComponent } from './historial-contrataciones/historial-contrataciones.component';
+import { VentasComponent } from './ventas/ventas.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { HistorialContratacionesComponent } from './historial-contrataciones/his
     HomeComponent,
     LoginComponent,
     RegisterUserComponent,
-    HistorialContratacionesComponent
+    HistorialContratacionesComponent,
+    VentasComponent
   ],
   imports: [
     BrowserModule,
