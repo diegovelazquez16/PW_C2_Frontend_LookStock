@@ -23,10 +23,9 @@ export class AddProveedoresComponent {
   editId: number = 0;
 
   constructor(private http: HttpClient, private router: Router) {
-    this.getProveedores(); // Cargar los proveedores al inicializar
+    this.getProveedores(); 
   }
 
-  // Enviar el formulario para crear un proveedor
   onSubmit() {
     if (this.editMode) {
       this.updateProveedor();
@@ -35,8 +34,8 @@ export class AddProveedoresComponent {
         .subscribe({
           next: (response) => {
             console.log('Proveedor añadido con éxito', response);
-            this.getProveedores(); // Refrescar la lista
-            this.resetForm(); // Reiniciar el formulario
+            this.getProveedores();
+            this.resetForm(); 
           },
           error: (error) => {
             console.error('Error al añadir el proveedor', error);
@@ -45,12 +44,11 @@ export class AddProveedoresComponent {
     }
   }
 
-  // Obtener todos los proveedores (Consultar)
   getProveedores() {
     this.http.get('http://localhost:3000/api/proveedores')
       .subscribe({
         next: (data: any) => {
-          this.proveedores = data;  // Asignar los proveedores al array
+          this.proveedores = data;  
         },
         error: (error) => {
           console.error('Error al obtener los proveedores', error);
@@ -58,7 +56,6 @@ export class AddProveedoresComponent {
       });
   }
 
-  // Preparar el formulario para editar un proveedor
   editProveedor(id: number) {
     const proveedorToEdit = this.proveedores.find(prov => prov.id_proveedor === id);
     if (proveedorToEdit) {
@@ -68,15 +65,14 @@ export class AddProveedoresComponent {
     }
   }
 
-  // Actualizar un proveedor
   updateProveedor() {
     this.http.put(`http://localhost:3000/api/proveedores/${this.editId}`, this.proveedor)
       .subscribe({
         next: (response) => {
           console.log('Proveedor actualizado con éxito', response);
-          this.getProveedores(); // Refrescar la lista
-          this.resetForm(); // Reiniciar el formulario
-          this.editMode = false; // Salir del modo de edición
+          this.getProveedores(); 
+          this.resetForm(); 
+          this.editMode = false; 
         },
         error: (error) => {
           console.error('Error al actualizar el proveedor', error);
@@ -84,13 +80,12 @@ export class AddProveedoresComponent {
       });
   }
 
-  // Eliminar un proveedor
   deleteProveedor(id: number) {
     this.http.delete(`http://localhost:3000/api/proveedores/${id}`)
       .subscribe({
         next: (response) => {
           console.log('Proveedor eliminado con éxito', response);
-          this.getProveedores(); // Refrescar la lista
+          this.getProveedores(); 
         },
         error: (error) => {
           console.error('Error al eliminar el proveedor', error);
@@ -98,7 +93,6 @@ export class AddProveedoresComponent {
       });
   }
 
-  // Reiniciar el formulario
   resetForm() {
     this.proveedor = {
       nombres: '',
@@ -107,7 +101,7 @@ export class AddProveedoresComponent {
       email: '',
       direccion: ''
     };
-    this.editMode = false; // Salir del modo de edición
-    this.editId = 0; // Reiniciar el ID de edición
+    this.editMode = false; 
+    this.editId = 0; 
   }
 }
