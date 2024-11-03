@@ -11,56 +11,44 @@ export class AddProveedoresComponent {
   title = 'Gestione su almacén';
 
   proveedor = {
-    nombres: '',        // Coincide con el modelo en el backend
-    apellidos: '',      // Coincide con el modelo en el backend
-    telefono: null,     // Debe ser número
-    email: '',          // Coincide con el modelo en el backend
-    direccion: ''       // Campo opcional
+    nombres: '',
+    apellidos: '',
+    telefono: null,
+    email: '',
+    direccion: ''
   };
 
-  proveedores: any[] = [];  // Lista de proveedores obtenida de la API
-  isModalOpen: boolean = false;
-  modalAction: string = '';
-  updateId: number = 0;
-  deleteId: number = 0;
+  proveedores: any[] = [];
+  editMode: boolean = false;
+  editId: number = 0;
 
-  constructor(private http: HttpClient, private router: Router) {}
-
-  // Enviar el formulario para crear un proveedor
-  onSubmit() {
-    this.http.post('http://localhost:3000/api/proveedores', this.proveedor)
-      .subscribe({
-        next: (response) => {
-          console.log('Proveedor añadido con éxito', response);
-          this.router.navigate(['/proveedores']);  // Redirige a la lista de proveedores o refresca
-        },
-        error: (error) => {
-          console.error('Error al añadir el proveedor', error);
-        }
-      });
+  constructor(private http: HttpClient, private router: Router) {
+    this.getProveedores(); 
   }
 
-  // Abrir modal para las operaciones CRUD
-  openModal(action: string) {
-    this.modalAction = action;
-    this.isModalOpen = true;
-
-    if (action === 'get') {
-      this.getProveedores();  // Consultar proveedores
+  onSubmit() {
+    if (this.editMode) {
+      this.updateProveedor();
+    } else {
+      this.http.post('http://localhost:3000/api/proveedores', this.proveedor)
+        .subscribe({
+          next: (response) => {
+            console.log('Proveedor añadido con éxito', response);
+            this.getProveedores();
+            this.resetForm(); 
+          },
+          error: (error) => {
+            console.error('Error al añadir el proveedor', error);
+          }
+        });
     }
   }
 
-  // Cerrar modal
-  closeModal() {
-    this.isModalOpen = false;
-  }
-
-  // Obtener todos los proveedores (Consultar)
   getProveedores() {
     this.http.get('http://localhost:3000/api/proveedores')
       .subscribe({
         next: (data: any) => {
-          this.proveedores = data;  // Asignar los proveedores al array
+          this.proveedores = data;  
         },
         error: (error) => {
           console.error('Error al obtener los proveedores', error);
@@ -68,13 +56,23 @@ export class AddProveedoresComponent {
       });
   }
 
-  // Actualizar un proveedor
+  editProveedor(id: number) {
+    const proveedorToEdit = this.proveedores.find(prov => prov.id_proveedor === id);
+    if (proveedorToEdit) {
+      this.proveedor = { ...proveedorToEdit };
+      this.editMode = true;
+      this.editId = id;
+    }
+  }
+
   updateProveedor() {
-    this.http.put(`http://localhost:3000/api/proveedores/${this.updateId}`, this.proveedor)
+    this.http.put(`http://localhost:3000/api/proveedores/${this.editId}`, this.proveedor)
       .subscribe({
         next: (response) => {
           console.log('Proveedor actualizado con éxito', response);
-          this.closeModal();  // Cerrar el modal tras actualizar
+          this.getProveedores(); 
+          this.resetForm(); 
+          this.editMode = false; 
         },
         error: (error) => {
           console.error('Error al actualizar el proveedor', error);
@@ -82,17 +80,28 @@ export class AddProveedoresComponent {
       });
   }
 
-  // Eliminar un proveedor
-  deleteProveedor() {
-    this.http.delete(`http://localhost:3000/api/proveedores/${this.deleteId}`)
+  deleteProveedor(id: number) {
+    this.http.delete(`http://localhost:3000/api/proveedores/${id}`)
       .subscribe({
         next: (response) => {
           console.log('Proveedor eliminado con éxito', response);
-          this.closeModal();  // Cerrar el modal tras eliminar
+          this.getProveedores(); 
         },
         error: (error) => {
           console.error('Error al eliminar el proveedor', error);
         }
       });
+  }
+
+  resetForm() {
+    this.proveedor = {
+      nombres: '',
+      apellidos: '',
+      telefono: null,
+      email: '',
+      direccion: ''
+    };
+    this.editMode = false; 
+    this.editId = 0; 
   }
 }

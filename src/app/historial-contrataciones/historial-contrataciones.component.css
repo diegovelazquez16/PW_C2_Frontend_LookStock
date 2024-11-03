@@ -1,0 +1,109 @@
+/* Estilo del encabezado */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 900px;
+    padding: 10px;
+    border-bottom: 2px solid #2148C0;
+    position: relative;
+    bottom: 15px;
+  }
+  
+  /* Contenedor principal */
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  /* Contenedor para formularios */
+  .form-container {
+    width: 400px; /* Ajustar el tamaño según tus necesidades */
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #fff;
+  }
+  
+  /* Estilo para los grupos de formularios */
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  /* Estilo para el logotipo */
+  .logo {
+    width: 50px;
+    height: 50px;
+  }
+  
+  /* Estilo para etiquetas de formularios */
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  /* Estilo para entradas de formularios */
+  input, select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  /* Estilo para botones */
+  button {
+    padding: 10px 15px;
+    background-color: #2148C0;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Estilo para el contenedor de la tabla */
+  .table-container {
+    width: 100%;
+    margin-top: 20px;
+    overflow-x: auto; /* Permitir desplazamiento horizontal en pantallas pequeñas */
+  }
+  
+  /* Estilo para la tabla */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  /* Estilo para las celdas de la tabla */
+  th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  /* Estilo para encabezados de la tabla */
+  th {
+    background-color: #2148C0;
+    color: white;
+  }
+  
+  /* Estilo específico para botones en la tabla (Ej. Editar, Eliminar) */
+  .table-container button {
+    background-color: #2148C0;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .table-container button:hover {
+    background-color: #0056b3;
+  }
+  
