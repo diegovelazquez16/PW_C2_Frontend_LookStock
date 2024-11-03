@@ -14,6 +14,9 @@ import { RealizarPedidosComponent } from './realizar-pedidos/realizar-pedidos.co
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterUserComponent } from './register-user/register-user.component';
+import { HistorialContratacionesComponent } from './historial-contrataciones/historial-contrataciones.component';
+import { VentasComponent } from './ventas/ventas.component';
+import { FacturasComponent } from './facturas/facturas.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,10 @@ import { RegisterUserComponent } from './register-user/register-user.component';
     RealizarPedidosComponent,
     HomeComponent,
     LoginComponent,
-    RegisterUserComponent
+    RegisterUserComponent,
+    HistorialContratacionesComponent,
+    VentasComponent,
+    FacturasComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +39,7 @@ import { RegisterUserComponent } from './register-user/register-user.component';
     HttpClientModule
   ],
   providers: [
-    provideHttpClient(withFetch()), // Habilitar fetch
+    provideHttpClient(withFetch()), 
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     provideClientHydration()
   ],
